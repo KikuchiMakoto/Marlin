@@ -25,6 +25,7 @@
 
 #define TFTBUFSIZE 4
 #define TFT_MAX_CMD_SIZE 96
+#define PROBE_MANUALLY
 
 enum AnycubicMediaPrintState {
   AMPRINTSTATE_NOT_PRINTING,
