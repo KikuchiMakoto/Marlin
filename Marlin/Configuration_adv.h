@@ -533,9 +533,9 @@
  * The fan turns on automatically whenever any driver is enabled and turns
  * off (or reduces to idle speed) shortly after drivers are turned off.
  */
-//#define USE_CONTROLLER_FAN
+#define USE_CONTROLLER_FAN
 #if ENABLED(USE_CONTROLLER_FAN)
-  //#define CONTROLLER_FAN_PIN -1           // Set a custom pin for the controller fan
+  #define CONTROLLER_FAN_PIN FAN1_PIN           // Set a custom pin for the controller fan
   //#define CONTROLLER_FAN_USE_Z_ONLY       // With this option only the Z axis is considered
   //#define CONTROLLER_FAN_IGNORE_Z         // Ignore Z stepper. Useful when stepper timeout is disabled.
   #define CONTROLLERFAN_SPEED_MIN         0 // (0-255) Minimum speed. (If set below this value the fan is turned off.)
@@ -632,7 +632,7 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN -1
+#define E0_AUTO_FAN_PIN FAN2_PIN
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -829,9 +829,12 @@
 #ifdef Z2_DRIVER_TYPE
   //#define INVERT_Z2_VS_Z_DIR        // Z2 direction signal is the opposite of Z
 
-  //#define Z_MULTI_ENDSTOPS          // Other Z axes have their own endstops
+  #define Z_MULTI_ENDSTOPS          // Other Z axes have their own endstops
   #if ENABLED(Z_MULTI_ENDSTOPS)
     #define Z2_USE_ENDSTOP   _XMAX_   // Z2 endstop board plug. Don't forget to enable USE_*_PLUG.
+    #define Z2_STEP_PIN   E1_STEP_PIN
+    #define Z2_DIR_PIN    E1_DIR_PIN
+    #define Z2_ENABLE_PIN E1_ENABLE_PIN
     #define Z2_ENDSTOP_ADJUSTMENT 0   // Z2 offset relative to Y endstop
   #endif
   #ifdef Z3_DRIVER_TYPE
@@ -876,7 +879,7 @@
 //#define HOMING_BACKOFF_POST_MM { 2, 2, 2 }  // (linear=mm, rotational=°) Backoff from endstops after homing
 //#define XY_COUNTERPART_BACKOFF_MM 0         // (mm) Backoff X after homing Y, and vice-versa
 
-//#define QUICK_HOME                          // If G28 contains XY do a diagonal move first
+#define QUICK_HOME                          // If G28 contains XY do a diagonal move first
 //#define HOME_Y_BEFORE_X                     // If G28 contains XY home Y before X
 //#define HOME_Z_FIRST                        // Home Z first. Requires a Z-MIN endstop (not a probe).
 //#define CODEPENDENT_XY_HOMING               // If X/Y can't home without homing Y/X first
@@ -1379,7 +1382,7 @@
 #endif // HAS_MARLINUI_MENU
 
 #if ANY(HAS_DISPLAY, DWIN_LCD_PROUI, DWIN_CREALITY_LCD_JYERSUI)
-  //#define SOUND_MENU_ITEM   // Add a mute option to the LCD menu
+  #define SOUND_MENU_ITEM   // Add a mute option to the LCD menu
   #define SOUND_ON_DEFAULT    // Buzzer/speaker default enabled state
 #endif
 
@@ -1395,19 +1398,19 @@
   #endif
 
   // Scroll a longer status message into view
-  //#define STATUS_MESSAGE_SCROLLING
+  #define STATUS_MESSAGE_SCROLLING
 
   // Apply a timeout to low-priority status messages
-  //#define STATUS_MESSAGE_TIMEOUT_SEC 30 // (seconds)
+  #define STATUS_MESSAGE_TIMEOUT_SEC 30 // (seconds)
 
   // On the Info Screen, display XY with one decimal place when possible
-  //#define LCD_DECIMAL_SMALL_XY
+  #define LCD_DECIMAL_SMALL_XY
 
   // Add an 'M73' G-code to set the current percentage
-  //#define LCD_SET_PROGRESS_MANUALLY
+  #define LCD_SET_PROGRESS_MANUALLY
 
   // Show the E position (filament used) during printing
-  //#define LCD_SHOW_E_TOTAL
+  #define LCD_SHOW_E_TOTAL
 
   /**
    * LED Control Menu
@@ -1440,15 +1443,15 @@
 // LCD Print Progress options
 #if EITHER(SDSUPPORT, LCD_SET_PROGRESS_MANUALLY)
   #if CAN_SHOW_REMAINING_TIME
-    //#define SHOW_REMAINING_TIME         // Display estimated time to completion
+    #define SHOW_REMAINING_TIME         // Display estimated time to completion
     #if ENABLED(SHOW_REMAINING_TIME)
-      //#define USE_M73_REMAINING_TIME    // Use remaining time from M73 command instead of estimation
+      #define USE_M73_REMAINING_TIME    // Use remaining time from M73 command instead of estimation
       //#define ROTATE_PROGRESS_DISPLAY   // Display (P)rogress, (E)lapsed, and (R)emaining time
     #endif
   #endif
 
   #if EITHER(HAS_MARLINUI_U8GLIB, EXTENSIBLE_UI)
-    //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
+    #define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
   #endif
 
   #if EITHER(HAS_MARLINUI_HD44780, IS_TFTGLCD_PANEL)
@@ -1516,7 +1519,7 @@
    * an option on the LCD screen to continue the print from the last-known
    * point in the file.
    */
-  //#define POWER_LOSS_RECOVERY
+  #define POWER_LOSS_RECOVERY
   #if ENABLED(POWER_LOSS_RECOVERY)
     #define PLR_ENABLED_DEFAULT   false // Power Loss Recovery enabled by default. (Set with 'M413 Sn' & M500)
     //#define BACKUP_POWER_SUPPLY       // Backup power / UPS to move the steppers on power loss
@@ -1579,13 +1582,13 @@
 
   // Allow international symbols in long filenames. To display correctly, the
   // LCD's font must contain the characters. Check your selected LCD language.
-  //#define UTF_FILENAME_SUPPORT
+  #define UTF_FILENAME_SUPPORT
 
-  //#define LONG_FILENAME_HOST_SUPPORT    // Get the long filename of a file/folder with 'M33 <dosname>' and list long filenames with 'M20 L'
+  #define LONG_FILENAME_HOST_SUPPORT    // Get the long filename of a file/folder with 'M33 <dosname>' and list long filenames with 'M20 L'
   //#define LONG_FILENAME_WRITE_SUPPORT   // Create / delete files with long filenames via M28, M30, and Binary Transfer Protocol
-  //#define M20_TIMESTAMP_SUPPORT         // Include timestamps by adding the 'T' flag to M20 commands
+  #define M20_TIMESTAMP_SUPPORT         // Include timestamps by adding the 'T' flag to M20 commands
 
-  //#define SCROLL_LONG_FILENAMES         // Scroll long filenames in the SD card menu
+  #define SCROLL_LONG_FILENAMES         // Scroll long filenames in the SD card menu
 
   //#define SD_ABORT_NO_COOLDOWN          // Leave the heaters on after Stop Print (not recommended!)
 
@@ -1674,7 +1677,7 @@
 
   #if ENABLED(BINARY_FILE_TRANSFER)
     // Include extra facilities (e.g., 'M20 F') supporting firmware upload via BINARY_FILE_TRANSFER
-    //#define CUSTOM_FIRMWARE_UPLOAD
+    #define CUSTOM_FIRMWARE_UPLOAD
   #endif
 
   /**
@@ -1686,7 +1689,7 @@
    *
    * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
    */
-  //#define SDCARD_CONNECTION LCD
+  #define SDCARD_CONNECTION LCD
 
   // Enable if SD detect is rendered useless (e.g., by using an SD extender)
   //#define NO_SD_DETECT
@@ -1745,7 +1748,7 @@
    * Adds the menu item Configuration > LCD Timeout (m) to set a wait period
    * from 0 (disabled) to 99 minutes.
    */
-  //#define DISPLAY_SLEEP_MINUTES 2  // (minutes) Timeout before turning off the screen. Set with M255 S.
+  #define DISPLAY_SLEEP_MINUTES 2  // (minutes) Timeout before turning off the screen. Set with M255 S.
 
   /**
    * ST7920-based LCDs can emulate a 16 x 4 character display using
@@ -1791,16 +1794,16 @@
   //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~3260 (or ~940) bytes of flash.
 
   // Frivolous Game Options
-  //#define MARLIN_BRICKOUT
-  //#define MARLIN_INVADERS
-  //#define MARLIN_SNAKE
+  #define MARLIN_BRICKOUT
+  #define MARLIN_INVADERS
+  #define MARLIN_SNAKE
   //#define GAMES_EASTER_EGG          // Add extra blank lines above the "Games" sub-menu
 
 #endif // HAS_MARLINUI_U8GLIB
 
 #if HAS_MARLINUI_U8GLIB || IS_DWIN_MARLINUI
   // Show SD percentage next to the progress bar
-  //#define SHOW_SD_PERCENT
+  #define SHOW_SD_PERCENT
 
   // Enable to save many cycles by drawing a hollow frame on Menu Screens
   #define MENU_HOLLOW_FRAME
@@ -1874,12 +1877,13 @@
 // Specify additional languages for the UI. Default specified by LCD_LANGUAGE.
 //
 #if ANY(DOGLCD, TFT_COLOR_UI, TOUCH_UI_FTDI_EVE, IS_DWIN_MARLINUI)
+  #define LCD_LANGUAGE_2 jp_kana
   //#define LCD_LANGUAGE_2 fr
   //#define LCD_LANGUAGE_3 de
   //#define LCD_LANGUAGE_4 es
   //#define LCD_LANGUAGE_5 it
   #ifdef LCD_LANGUAGE_2
-    //#define LCD_LANGUAGE_AUTO_SAVE // Automatically save language to EEPROM on change
+    #define LCD_LANGUAGE_AUTO_SAVE // Automatically save language to EEPROM on change
   #endif
 #endif
 
@@ -2015,7 +2019,7 @@
  *
  * Warning: Does not respect endstops!
  */
-//#define BABYSTEPPING
+#define BABYSTEPPING
 #if ENABLED(BABYSTEPPING)
   //#define INTEGRATED_BABYSTEPPING         // EXPERIMENTAL integration of babystepping into the Stepper ISR
   //#define BABYSTEP_WITHOUT_HOMING
@@ -2062,13 +2066,13 @@
  *
  * See https://marlinfw.org/docs/features/lin_advance.html for full instructions.
  */
-//#define LIN_ADVANCE
+#define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
-  //#define EXTRA_LIN_ADVANCE_K // Add a second linear advance constant, configurable with M900.
+  #define EXTRA_LIN_ADVANCE_K // Add a second linear advance constant, configurable with M900.
   #define LIN_ADVANCE_K 0.22    // Unit: mm compression per 1mm/s extruder speed
   //#define LA_DEBUG            // Print debug information to serial during operation. Disable for production use.
-  //#define EXPERIMENTAL_SCURVE // Allow S-Curve Acceleration to be used with LA.
-  //#define ALLOW_LOW_EJERK     // Allow a DEFAULT_EJERK value of <10. Recommended for direct drive hotends.
+  #define EXPERIMENTAL_SCURVE // Allow S-Curve Acceleration to be used with LA.
+  #define ALLOW_LOW_EJERK     // Allow a DEFAULT_EJERK value of <10. Recommended for direct drive hotends.
   //#define EXPERIMENTAL_I2S_LA // Allow I2S_STEPPER_STREAM to be used with LA. Performance degrades as the LA step rate reaches ~20kHz.
 #endif
 
@@ -2246,7 +2250,7 @@
 #endif
 
 // G5 Bézier Curve Support with XYZE destination and IJPQ offsets
-//#define BEZIER_CURVE_SUPPORT        // Requires ~2666 bytes
+#define BEZIER_CURVE_SUPPORT        // Requires ~2666 bytes
 
 #if EITHER(ARC_SUPPORT, BEZIER_CURVE_SUPPORT)
   //#define CNC_WORKSPACE_PLANES      // Allow G2/G3/G5 to operate in XY, ZX, or YZ planes
@@ -2355,7 +2359,7 @@
 // For debug-echo: 128 bytes for the optimal speed.
 // Other output doesn't need to be that speedy.
 // :[0, 2, 4, 8, 16, 32, 64, 128, 256]
-#define TX_BUFFER_SIZE 0
+#define TX_BUFFER_SIZE 128
 
 // Host Receive Buffer Size
 // Without XON/XOFF flow control (see SERIAL_XON_XOFF below) 32 bytes should be enough.
@@ -2393,7 +2397,7 @@
  * Currently handles M108, M112, M410, M876
  * NOTE: Not yet implemented for all platforms.
  */
-//#define EMERGENCY_PARSER
+#define EMERGENCY_PARSER
 
 /**
  * Realtime Reporting (requires EMERGENCY_PARSER)
@@ -2586,7 +2590,7 @@
  *
  * Enable PARK_HEAD_ON_PAUSE to add the G-code M125 Pause and Park.
  */
-//#define ADVANCED_PAUSE_FEATURE
+#define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
   #define PAUSE_PARK_RETRACT_FEEDRATE         60  // (mm/s) Initial retract feedrate.
   #define PAUSE_PARK_RETRACT_LENGTH            2  // (mm) Initial retract.
@@ -2793,6 +2797,7 @@
  * https://github.com/teemuatlut/TMCStepper
  * @section tmc/config
  */
+
 #if HAS_TRINAMIC_CONFIG
 
   #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
@@ -3110,6 +3115,7 @@
    */
   #define STEALTHCHOP_XY
   #define STEALTHCHOP_Z
+  #define STEALTHCHOP_Z2
   #define STEALTHCHOP_I
   #define STEALTHCHOP_J
   #define STEALTHCHOP_K
@@ -3187,7 +3193,7 @@
    * STEALTHCHOP_(XY|Z|E) must be enabled to use HYBRID_THRESHOLD.
    * M913 X/Y/Z/E to live tune the setting
    */
-  //#define HYBRID_THRESHOLD
+  #define HYBRID_THRESHOLD
 
   #define X_HYBRID_THRESHOLD     100  // [mm/s]
   #define X2_HYBRID_THRESHOLD    100
@@ -3284,7 +3290,7 @@
    * Enable M122 debugging command for TMC stepper drivers.
    * M122 S0/1 will enable continuous reporting.
    */
-  //#define TMC_DEBUG
+  #define TMC_DEBUG
 
   /**
    * You can set your own advanced settings by filling in predefined functions.
@@ -3349,7 +3355,7 @@
  * Add the M240 G-code to take a photo.
  * The photo can be triggered by a digital pin or a physical movement.
  */
-//#define PHOTO_GCODE
+#define PHOTO_GCODE
 #if ENABLED(PHOTO_GCODE)
   // A position to move to (and raise Z) before taking the photo
   //#define PHOTO_POSITION { X_MAX_POS - 5, Y_MAX_POS, 0 }  // { xpos, ypos, zraise } (M240 X Y Z)
@@ -3760,7 +3766,7 @@
 #endif
 
 // Support for MeatPack G-code compression (https://github.com/scottmudge/OctoPrint-MeatPack)
-//#define MEATPACK_ON_SERIAL_PORT_1
+#define MEATPACK_ON_SERIAL_PORT_1
 //#define MEATPACK_ON_SERIAL_PORT_2
 
 //#define GCODE_CASE_INSENSITIVE  // Accept G-code sent to the firmware in lowercase
@@ -3930,15 +3936,15 @@
  * Host Prompt Support enables Marlin to use the host for user prompts so
  * filament runout and other processes can be managed from the host side.
  */
-//#define HOST_ACTION_COMMANDS
+#define HOST_ACTION_COMMANDS
 #if ENABLED(HOST_ACTION_COMMANDS)
-  //#define HOST_PAUSE_M76                // Tell the host to pause in response to M76
-  //#define HOST_PROMPT_SUPPORT           // Initiate host prompts to get user feedback
+  #define HOST_PAUSE_M76                // Tell the host to pause in response to M76
+  #define HOST_PROMPT_SUPPORT           // Initiate host prompts to get user feedback
   #if ENABLED(HOST_PROMPT_SUPPORT)
-    //#define HOST_STATUS_NOTIFICATIONS   // Send some status messages to the host as notifications
+    #define HOST_STATUS_NOTIFICATIONS   // Send some status messages to the host as notifications
   #endif
-  //#define HOST_START_MENU_ITEM          // Add a menu item that tells the host to start
-  //#define HOST_SHUTDOWN_MENU_ITEM       // Add a menu item that tells the host to shut down
+  #define HOST_START_MENU_ITEM          // Add a menu item that tells the host to start
+  #define HOST_SHUTDOWN_MENU_ITEM       // Add a menu item that tells the host to shut down
 #endif
 
 // @section extras
@@ -4293,7 +4299,7 @@
 //
 // M100 Free Memory Watcher to debug memory usage
 //
-//#define M100_FREE_MEMORY_WATCHER
+#define M100_FREE_MEMORY_WATCHER
 
 //
 // M42 - Set pin states
@@ -4303,7 +4309,7 @@
 //
 // M43 - display pin status, toggle pins, watch pins, watch endstops & toggle LED, test servo probe
 //
-//#define PINS_DEBUGGING
+#define PINS_DEBUGGING
 
 // Enable Tests that will run at startup and produce a report
 //#define MARLIN_TEST_BUILD

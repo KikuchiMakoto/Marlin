@@ -78,6 +78,7 @@
   #define CONTROLLER_FAN_PIN                   7
 #endif
 
+
 //
 // AnyCubic standard pin mappings
 //
@@ -91,6 +92,10 @@
 // Limit Switches
 //
 //#define ANYCUBIC_4_MAX_PRO_ENDSTOPS
+//#define FIL_RUNOUT_PIN                      19
+#define FIL_RUNOUT_PIN                      21
+#define Y_STOP_PIN                          42
+#define Z2_MIN_PIN                          43
 
 #if ENABLED(ANYCUBIC_4_MAX_PRO_ENDSTOPS)
   #define X_MAX_PIN                           43
@@ -112,6 +117,18 @@
   #define SD_DETECT_PIN                       49
 #endif
 
+#if HAS_TMC_UART
+  //#define TMC_BAUD_RATE 19200
+  #define X_SERIAL_TX_PIN 11
+  #define X_SERIAL_RX_PIN 11
+  #define Y_SERIAL_TX_PIN 12
+  #define Y_SERIAL_RX_PIN 12
+  #define Z_SERIAL_TX_PIN 66
+  #define Z_SERIAL_RX_PIN 66
+  #define E0_HARDWARE_SERIAL Serial3
+  #define Z2_SERIAL_TX_PIN 69
+  #define Z2_SERIAL_RX_PIN 69
+#endif
 #include "pins_RAMPS.h"
 
 //
@@ -143,5 +160,8 @@
     #undef DOGLCD_A0
     #define DOGLCD_A0                         42
   #endif
-
+  #ifdef BEEPER_PIN
+  #undef BEEPER_PIN
+  #endif
+  #define BEEPER_PIN                          31
 #endif // HAS_WIRED_LCD
