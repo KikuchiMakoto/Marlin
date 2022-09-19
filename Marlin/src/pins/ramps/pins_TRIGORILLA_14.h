@@ -91,9 +91,7 @@
 //
 // Limit Switches
 //
-//#define ANYCUBIC_4_MAX_PRO_ENDSTOPS
-//#define FIL_RUNOUT_PIN                      19
-#define FIL_RUNOUT_PIN                      21
+#define FIL_RUNOUT_PIN                      19
 #define Y_STOP_PIN                          42
 #define Z2_MIN_PIN                          43
 
