@@ -116,7 +116,7 @@
 #endif
 
 #if HAS_TMC_UART
-  //#define TMC_BAUD_RATE 19200
+  #define TMC_BAUD_RATE 57600
   #define X_SERIAL_TX_PIN 11
   #define X_SERIAL_RX_PIN 11
   #define Y_SERIAL_TX_PIN 12
